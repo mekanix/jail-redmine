@@ -1,0 +1,7 @@
+---
+- name: install packages
+  with_items: "{{ redmine_packages }}"
+  pkgng:
+    name: "{{ item.name }}"
+  notify:
+    - restart redmine

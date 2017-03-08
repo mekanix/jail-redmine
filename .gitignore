@@ -1,0 +1,9 @@
+.vagrant/
+*.retry
+provision/group_vars/all
+provision/inventory/localhost
+provision/site.yml
+cbsd.conf
+backup.ldif
+web.img
+vars.mk
