@@ -3,5 +3,8 @@
   with_items: "{{ redmine_packages }}"
   pkgng:
     name: "{{ item.name }}"
-  notify:
-    - restart redmine
+
+- name: configure database
+  template:
+    src: database.yml.j2
+    dest: /usr/local/www/redmine/config/database.yml

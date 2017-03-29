@@ -2,6 +2,10 @@
 PROJECT=redmine
 .endif
 
+.if !defined(DB_PROJECT)
+DB_PROJECT=postgresql
+.endif
+
 .if !defined(DOMAIN)
 DOMAIN=example.com
 .endif

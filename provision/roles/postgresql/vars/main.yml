@@ -1,0 +1,3 @@
+---
+postgresql_packages:
+  - name: py27-psycopg2

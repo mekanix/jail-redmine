@@ -1,0 +1,5 @@
+---
+- name: dummy task
+  file:
+    path: /tmp
+    state: touch

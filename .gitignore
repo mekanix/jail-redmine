@@ -2,6 +2,8 @@
 *.retry
 provision/group_vars/all
 provision/inventory/localhost
+provision/inventory/db
+provision/db.yml
 provision/site.yml
 cbsd.conf
 backup.ldif

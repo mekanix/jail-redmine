@@ -1,0 +1,18 @@
+---
+- name: install packages
+  with_items: "{{ postgresql_packages }}"
+  pkgng:
+    name: "{{ item.name }}"
+
+- name: create redmine DB user
+  postgresql_user:
+    name: "{{ redmine_db_user }}"
+    password: "{{ redmine_db_password }}"
+    login_user: pgsql
+    db: postgres
+
+- name: create redmine DB
+  postgresql_db:
+    name: "{{ redmine_db }}"
+    owner: "{{ redmine_db_user }}"
+    login_user: pgsql

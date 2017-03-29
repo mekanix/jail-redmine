@@ -24,9 +24,12 @@ destroy: down
 
 setup:
 	@sed -e "s:PROJECT:${PROJECT}:g" templates/provision/site.yml.tpl >provision/site.yml
+	@sed -e "s:PROJECT:${PROJECT}:g" templates/provision/db.yml.tpl >provision/db.yml
 	@sed -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory.${STAGE}.tpl >provision/inventory/${INVENTORY}
 	@sed -e "s:PROJECT:${PROJECT}:g" -e "s:DOMAIN:${DOMAIN}:g" templates/cbsd.conf.${STAGE}.tpl >cbsd.conf
 	@sed -e "s:PROJECT:${PROJECT}:g" -e "s:DOMAIN:${DOMAIN}:g" templates/provision/group_vars/all.tpl >provision/group_vars/all
+	@sed -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory/db.${STAGE}.tpl >provision/inventory/db
+	@sed -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/db.yml.tpl >provision/db.yml
 
 login:
 	@sudo cbsd jlogin ${PROJECT}
@@ -39,3 +42,6 @@ build:
 	@sudo cbsd jexport ${PROJECT}
 	@sudo mv /cbsd/export/${PROJECT}.img .
 	@sudo chown ${UID}:${GID} ${PROJECT}.img
+
+db: setup
+	@sudo ansible-playbook -i provision/inventory/db provision/db.yml
