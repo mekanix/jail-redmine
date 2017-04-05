@@ -2,6 +2,4 @@
 # vi: set ft=ansible :
 
 ---
-ldap_admin_password: root
-stage: devel
 redmine_db_password: redmine

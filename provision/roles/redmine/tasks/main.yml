@@ -3,8 +3,43 @@
   with_items: "{{ redmine_packages }}"
   pkgng:
     name: "{{ item.name }}"
+  notify:
+    - restart redmine
+
+- name: setup /etc/hosts
+  lineinfile:
+    regexp: '^10\..*\..*\..* postgresql$'
+    dest: /etc/hosts
+    line: "{{ hostvars['postgresql'].ansible_all_ipv4_addresses[0] }} postgresql"
+    state: present
+
+- name: configure redmine
+  template:
+    src: configuration.yml.j2
+    dest: /usr/local/www/redmine/config/configuration.yml
+  notify:
+    - restart redmine
 
 - name: configure database
   template:
     src: database.yml.j2
     dest: /usr/local/www/redmine/config/database.yml
+  notify:
+    - restart redmine
+
+- name: create redmine init script
+  template:
+    src: redmine-service.j2
+    dest: /usr/local/etc/rc.d/redmine
+    mode: 0755
+  notify:
+    - restart redmine
+    - generate secret token
+    - add initial DB data
+
+- name: enable redmine
+  template:
+    src: redmine.j2
+    dest: /etc/rc.conf.d/redmine
+  notify:
+    - restart redmine

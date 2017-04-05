@@ -6,6 +6,10 @@ PROJECT=redmine
 DB_PROJECT=postgresql
 .endif
 
+.if !defined(WEB_PROJECT)
+WEB_PROJECT=web
+.endif
+
 .if !defined(DOMAIN)
 DOMAIN=example.com
 .endif

@@ -23,13 +23,12 @@ destroy: down
 	@sudo cbsd jremove ${PROJECT}
 
 setup:
-	@sed -e "s:PROJECT:${PROJECT}:g" templates/provision/site.yml.tpl >provision/site.yml
-	@sed -e "s:PROJECT:${PROJECT}:g" templates/provision/db.yml.tpl >provision/db.yml
-	@sed -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory.${STAGE}.tpl >provision/inventory/${INVENTORY}
 	@sed -e "s:PROJECT:${PROJECT}:g" -e "s:DOMAIN:${DOMAIN}:g" templates/cbsd.conf.${STAGE}.tpl >cbsd.conf
 	@sed -e "s:PROJECT:${PROJECT}:g" -e "s:DOMAIN:${DOMAIN}:g" templates/provision/group_vars/all.tpl >provision/group_vars/all
-	@sed -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory/db.${STAGE}.tpl >provision/inventory/db
-	@sed -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/db.yml.tpl >provision/db.yml
+	@sed -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/site.yml.tpl >provision/site.yml
+	@sed -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory/localhost.${STAGE}.tpl >provision/inventory/${INVENTORY}
+	@sed -e "s:WEB_PROJECT:${WEB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/web.yml.tpl >provision/web.yml
+	@sed -e "s:WEB_PROJECT:${WEB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory/web.${STAGE}.tpl >provision/inventory/web
 
 login:
 	@sudo cbsd jlogin ${PROJECT}
@@ -43,5 +42,5 @@ build:
 	@sudo mv /cbsd/export/${PROJECT}.img .
 	@sudo chown ${UID}:${GID} ${PROJECT}.img
 
-db: setup
-	@sudo ansible-playbook -i provision/inventory/db provision/db.yml
+web: setup
+	@sudo ansible-playbook -i provision/inventory/web provision/web.yml

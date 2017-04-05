@@ -1,0 +1,18 @@
+# -*- mode: ansible -*-
+# vi: set ft=ansible :
+
+---
+- name: redmine provisioning
+  hosts: redmine
+  roles:
+    - dummy
+
+- name: web provisioning
+  hosts: web
+  roles:
+    - web
+
+- name: localhost provisioning
+  hosts: localhost
+  roles:
+    - resolve_web
