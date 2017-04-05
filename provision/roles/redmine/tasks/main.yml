@@ -1,4 +1,14 @@
 ---
+- name: create redmine init script
+  template:
+    src: redmine-service.j2
+    dest: /usr/local/etc/rc.d/redmine
+    mode: 0755
+  notify:
+    - generate secret token
+    - add initial DB data
+    - restart redmine
+
 - name: install packages
   with_items: "{{ redmine_packages }}"
   pkgng:
@@ -25,16 +35,6 @@
     src: database.yml.j2
     dest: /usr/local/www/redmine/config/database.yml
   notify:
-    - restart redmine
-
-- name: create redmine init script
-  template:
-    src: redmine-service.j2
-    dest: /usr/local/etc/rc.d/redmine
-    mode: 0755
-  notify:
-    - generate secret token
-    - add initial DB data
     - restart redmine
 
 - name: enable redmine
