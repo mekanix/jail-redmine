@@ -33,9 +33,9 @@
     dest: /usr/local/etc/rc.d/redmine
     mode: 0755
   notify:
-    - restart redmine
     - generate secret token
     - add initial DB data
+    - restart redmine
 
 - name: enable redmine
   template:
