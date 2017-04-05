@@ -9,7 +9,12 @@
   args:
     chdir: /usr/local/www/redmine
 
-- name: add initial DB data
+- name: prepare DB
   shell: RAILS_ENV=production bundle exec rake db:migrate
+  args:
+    chdir: /usr/local/www/redmine
+
+- name: add initial DB data
+  shell: RAILS_ENV=production REDMINE_LANG=en bundle exec rake redmine:load_default_data
   args:
     chdir: /usr/local/www/redmine
