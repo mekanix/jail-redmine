@@ -1,11 +1,8 @@
-.vagrant/
 *.retry
-provision/group_vars/all
-provision/inventory/localhost
-provision/inventory/db
+build
+provision/group_vars
+provision/inventory
 provision/db.yml
 provision/site.yml
 cbsd.conf
-backup.ldif
-web.img
 vars.mk
