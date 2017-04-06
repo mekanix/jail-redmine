@@ -26,9 +26,9 @@ setup:
 	@sed -e "s:PROJECT:${PROJECT}:g" -e "s:DOMAIN:${DOMAIN}:g" templates/cbsd.conf.${STAGE}.tpl >cbsd.conf
 	@sed -e "s:PROJECT:${PROJECT}:g" -e "s:DOMAIN:${DOMAIN}:g" templates/provision/group_vars/all.tpl >provision/group_vars/all
 	@sed -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/site.yml.tpl >provision/site.yml
-	@sed -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory/localhost.${STAGE}.tpl >provision/inventory/${INVENTORY}
+	@sed -e "s:STAGE:${STAGE}:g" -e "s:DB_PROJECT:${DB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory/localhost.tpl >provision/inventory/${INVENTORY}
 	@sed -e "s:WEB_PROJECT:${WEB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/web.yml.tpl >provision/web.yml
-	@sed -e "s:WEB_PROJECT:${WEB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory/web.${STAGE}.tpl >provision/inventory/web
+	@sed -e "s:WEB_PROJECT:${WEB_PROJECT}:g" -e "s:PROJECT:${PROJECT}:g" templates/provision/inventory/web.tpl >provision/inventory/web
 
 login:
 	@sudo cbsd jlogin ${PROJECT}
