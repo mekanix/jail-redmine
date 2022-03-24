@@ -1,0 +1,17 @@
+---
+- name: install redmine packages
+  with_items: "{{ redmine_packages }}"
+  package:
+    name: "{{ item.name }}"
+    state: latest
+  notify:
+    - restart redmine
+
+- name: setup redmine template
+  template:
+    src: redmine.j2
+    dest: /etc/rc.conf.d/redmine
+    owner: root
+    group: wheel
+  notify:
+    - restart redmine

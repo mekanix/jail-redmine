@@ -1,4 +1,0 @@
----
-redmine_packages:
-  - name: redmine
-  - name: rubygem-pg
