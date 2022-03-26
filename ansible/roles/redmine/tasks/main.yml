@@ -15,3 +15,13 @@
     group: wheel
   notify:
     - restart redmine
+
+- name: setup database template
+  template:
+    src: "database.yml.j2"
+    dest: "/usr/local/www/redmine/config/database.yml"
+    owner: "root"
+    group: "wheel"
+    mode: 0644
+  notify:
+    - restart redmine
