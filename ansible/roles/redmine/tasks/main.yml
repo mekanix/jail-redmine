@@ -16,6 +16,15 @@
   notify:
     - restart redmine
 
+- name: setup redmine service
+  template:
+    src: redmine.rd.j2
+    dest: /usr/local/etc/rc.d/redmine
+    owner: root
+    group: wheel
+  notify:
+    - restart redmine
+
 - name: setup database template
   template:
     src: "database.yml.j2"
@@ -25,3 +34,18 @@
     mode: 0644
   notify:
     - restart redmine
+
+- name: generate secret token
+  shell:
+    chdir: /usr/local/www/redmine
+    cmd: bundle exec rake generate_secret_token
+
+- name: migrate database
+  shell:
+    chdir: /usr/local/www/redmine
+    cmd: env RAILS_ENV=production bundle exec rake db:migrate
+
+- name: load default data
+  shell:
+    chdir: /usr/local/www/redmine
+    cmd: env RAILS_ENV=production REDMINE_LANG=en bundle exec rake redmine:load_default_data
