@@ -1,3 +1,6 @@
 ---
+redmine_major: 5
+redmine_minor: 0
+redmine_version: "{{ redmine_major }}{{ redmine_minor }}"
 redmine_packages:
-  - name: redmine42
+  - name: "redmine{{ redmine_version }}"
